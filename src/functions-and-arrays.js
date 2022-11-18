@@ -3,7 +3,7 @@ function maxOfTwoNumbers(num1, num2) {
   return num1 > num2 ? num1 : num2;
 }
 
-console.log(maxOfTwoNumbers(2, 5));
+console.log(`Find the maximum: ${maxOfTwoNumbers(2, 5)}`);
 
 // Iteration #2: Find longest word
 const words = ["mystery", "brother", "aviator", "crocodile", "pearl", "orchard", "crackpot"];
@@ -13,7 +13,7 @@ function findLongestWord(words) {
   return sortWords.length ? sortWords[0] : null;
 }
 
-console.log(findLongestWord(words));
+console.log(`Find the longest word: ${findLongestWord(words)}`);
 
 // Iteration #3: Calculate the sum
 const numbers = [6, 12, 1, 18, 13, 16, 2, 1, 8, 10];
@@ -24,17 +24,15 @@ function sumNumbers(numbers) {
   return sum;
 }
 
-console.log(sumNumbers(numbers));
+console.log(`Calculate the sum of array of numbers: ${sumNumbers(numbers)}`);
 
 // Iteration #3.1 Bonus:
-const mixedArr = [6, 12, "miami", 1, true, "barca", "200", "lisboa", 8, 10];
+const mixedArr = [6, 12, "miami", 1, "barca", "200", "lisboa", 8, true];
 
 function sum(things) {
   let intArr = [];
   for (let thing of things) {
     switch (typeof thing) {
-      case "object":
-        throw new Error("Unsupported data type sir or ma'am");
       case "number":
         intArr.push(thing);
         break;
@@ -42,13 +40,16 @@ function sum(things) {
         intArr.push(thing.length);
         break;
       case "boolean":
-        thing === true ? intArr.push(1) : intArr.push(0);
+        thing ? intArr.push(1) : intArr.push(0);
+        break;
+      case "object":
+        throw new Error("Unsupported data type sir or ma'am");
     }
   }
   return things.length ? intArr.reduce((a, b) => a + b) : 0;
 }
 
-console.log(sum(mixedArr));
+console.log(`Calculate the sum: ${sum(mixedArr)}`);
 
 // Iteration #4: Calculate the average
 // Level 1: Array of numbers
@@ -57,55 +58,58 @@ const numbersAvg = [2, 6, 9, 10, 7, 4, 1, 9];
 function averageNumbers(numbers) {
   let average = 0;
   for (let number of numbers) average += number;
-  average /= numbers.length;
-  return numbers.length === 0 ? null : average;
+  return numbers.length ? (average /= numbers.length) : null;
 }
 
-console.log(averageNumbers(numbersAvg));
+console.log(`Calculate the average of an array of numbers: ${averageNumbers(numbersAvg)}`);
 
 // Level 2: Array of strings
 const wordsArr = ["seat", "correspond", "linen", "motif", "hole", "smell", "smart", "chaos", "fuel", "palace"];
 
 function averageWordLength(words) {
   let lengthWords = [];
+
   for (let word of words) {
     lengthWords.push(word.length);
   }
 
-  let averageLengthWords = 0;
-  for (let lengthWord of lengthWords) averageLengthWords += lengthWord;
-  averageLengthWords /= lengthWords.length;
-
-  return lengthWords.length ? averageLengthWords : null;
+  return lengthWords.length ? lengthWords.reduce((a, b) => a + b) / lengthWords.length : null;
 }
 
-console.log(averageWordLength(wordsArr));
+console.log(`Calculate the average of an array of strings: ${averageWordLength(wordsArr)}`);
 
 // Bonus - Iteration #4.1
 function avg(things) {
   let intValues = [];
   for (let thing of things) {
-    if (typeof thing === "number") intValues.push(thing);
-    if (typeof thing === "string") intValues.push(thing.length);
-    if (typeof thing === "boolean") thing === true ? intValues.push(1) : intValues.push(0);
+    switch (typeof thing) {
+      case "number":
+        intValues.push(thing);
+        break;
+      case "string":
+        intValues.push(thing.length);
+        break;
+      case "boolean":
+        thing ? intValues.push(1) : intValues.push(0);
+    }
   }
 
   return things.length ? intValues.reduce((a, b) => a + b) / things.length : null;
 }
 
-console.log(avg(mixedArr));
+console.log(`Bonus: Calculate the average of a mixed elements array: ${avg(mixedArr)}`);
 
 // Iteration #5: Unique arrays
 const wordsUnique = ["crab", "poison", "contagious", "simple", "bring", "sharp", "playground", "poison", "communion", "simple", "bring"];
 
 function uniquifyArray(words) {
   let uniquify = [];
-  for (let word of words) if (uniquify.includes(word) === false) uniquify.push(word);
+  for (let word of words) if (!uniquify.includes(word)) uniquify.push(word);
 
   return words.length ? uniquify : null;
 }
 
-console.log(uniquifyArray(wordsUnique));
+console.log(`Unique array: ${uniquifyArray(wordsUnique)}`);
 
 // Iteration #6: Find elements
 const wordsFind = ["machine", "subset", "trouble", "starting", "matter", "eating", "truth", "disobedience"];
@@ -114,20 +118,19 @@ function doesWordExist(wordsFind, wordToFind) {
   return wordsFind.length ? (wordsFind.includes(wordToFind) ? true : false) : null;
 }
 
-console.log(doesWordExist(wordsFind, "machine"));
+console.log(`Find elements: ${doesWordExist(wordsFind, "machine")}`);
 
 // Iteration #7: Count repetition
 const wordsCount = ["machine", "matter", "subset", "trouble", "starting", "matter", "eating", "matter", "truth", "disobedience", "matter"];
 
 function howManyTimes(words, wordToFind) {
-  let finded = [];
+  let finded = 0;
+  for (let word of words) if (word === wordToFind) finded++;
 
-  for (let word of words) if (word === wordToFind) finded.push(word);
-
-  return finded.length ? finded.length : 0;
+  return words.length ? finded : 0;
 }
 
-console.log(howManyTimes(wordsCount, "metter"));
+console.log(`Count repetition: ${howManyTimes(wordsCount, "metter")}`);
 
 // Iteration #8: Bonus
 const matrix = [
